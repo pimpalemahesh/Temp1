@@ -22,6 +22,13 @@ from django.urls import include
 
 from DjangoEcommerce import settings
 
+from django.conf.urls import url
+from django.views.static import serve
+
 urlpatterns = [
-    path('',include("DjangoEcommerceApp.adminurls"))
-]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    path('', include("DjangoEcommerceApp.adminurls")),
+    url(r'^media/(?P<path>.*)$', serve,
+        {'document_root':       settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,
+        {'document_root': settings.STATIC_ROOT}),
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
